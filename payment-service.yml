@@ -3,12 +3,13 @@ server:
 
 spring:
   application:
-    name: PAYMENT-SERVICE
+    name: payment-service
 
   datasource:
     url: jdbc:postgresql://localhost:5432/paymentdb
     username: satish
     password: password
+    driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:
@@ -23,3 +24,25 @@ eureka:
 razorpay:
   key: rzp_test_Ssn4eIKgveB1vK
   secret: eOn2BV0eYyuPinL3xsdcK570
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      paymentService:
+        registerHealthIndicator: true
+        slidingWindowSize: 5
+        minimumNumberOfCalls: 3
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 2
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,circuitbreakers,circuitbreakerevents
+
+  endpoint:
+    health:
+      show-details: always
