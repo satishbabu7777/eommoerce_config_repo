@@ -16,9 +16,6 @@ spring:
       ddl-auto: update
     show-sql: true
 
-  config:
-    import: optional:configserver:http://localhost:8888
-
 eureka:
   client:
     service-url:
@@ -31,16 +28,9 @@ resilience4j:
         sliding-window-size: 5
         failure-rate-threshold: 50
         wait-duration-in-open-state: 10s
-        permitted-number-of-calls-in-half-open-state: 3
-        minimum-number-of-calls: 5
-        automatic-transition-from-open-to-half-open-enabled: true
 
 management:
   endpoints:
     web:
       exposure:
         include: health,info,circuitbreakers
-
-  endpoint:
-    health:
-      show-details: always
