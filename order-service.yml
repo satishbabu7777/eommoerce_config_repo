@@ -23,10 +23,10 @@ eureka:
 resilience4j:
   circuitbreaker:
     instances:
-      paymentService:
+      productService:
         registerHealthIndicator: true
         slidingWindowSize: 5
         minimumNumberOfCalls: 3
         failureRateThreshold: 50
         waitDurationInOpenState: 10s
-        permittedNumberOfCallsInHalfOpenState: 2      
+        permittedNumberOfCallsInHalfOpenState: 2
